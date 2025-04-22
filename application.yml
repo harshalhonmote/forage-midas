@@ -1,0 +1,27 @@
+general:
+  kafka-topic: kafka-topic
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:midasdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+    h2:
+      console:
+        enabled: true
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: midas-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: com.jpmc.midascore.foundation.Transaction
